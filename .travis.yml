@@ -26,5 +26,5 @@ service:
 addons:
   sonarcloud:
     organization: "devopevrard"
-      token: "$SONARCLOUD_TOKEN"
+    token: "$SONARCLOUD_TOKEN"
 
