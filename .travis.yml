@@ -1,6 +1,10 @@
 language: java
 script:
-  - mvn clean verify --file ./simple-api/pom.xml
+  - cd ./simple-api/
+  - -mvn clean verify org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=evrardkey
+  - cd ..
+
+#  - mvn clean verify --file ./simple-api/pom.xml
   - docker login -u $DOCKER_USER -p $DOCKER_PWD
 
   - docker build -t $DOCKER_USER/super-release:database database
@@ -11,12 +15,16 @@ script:
   - docker push $DOCKER_USER/super-release:httpd
   - docker push $DOCKER_USER/super-release:simple-api
 
-  - mvn clean verify org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=edeparcevaux_Devops
 
+cache:
+  directories:
+    -$HOME/.m2
+
+service:
+  - docker
 
 addons:
   sonarcloud:
-    organization: "edeparcevaux"
-      token:
-        secure: '$SONARCLOUD_TOKEN'
+    organization: "devopevrard"
+      token: "$SONARCLOUD_TOKEN"
 
