@@ -2,6 +2,11 @@ language: java
 script:
   - mvn clean verify --file ./simple-api/pom.xml
   - docker login -u $DOCKER_USER -p $DOCKER_PWD
-  - docker push edeparc/correction-tp1-master_database
-  - docker push edeparc/correction-tp1-master_simple-api
-  - docker push edeparc/correction-tp1-master_httpd
+  - 
+  - docker build -t $DOCKER_USER/super-release:database database
+  - docker build -t $DOCKER_USER/super-release:simple-api simple-api
+  - docker build -t $DOCKER_USER/super-release:httpd httpd
+
+  - docker push $DOCKER_USER/super-release:database
+  - docker push $DOCKER_USER/super-release:httpd
+  - docker push $DOCKER_USER/super-release:simple-api
