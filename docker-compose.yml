@@ -25,9 +25,9 @@ services:
     networks:
       - app-network
 
-  front:
-    container_name: front
-    build: front
+  devops-front:
+    container_name: devops-front
+    build: ./front
     ports:
       - "80:80"
     network:
